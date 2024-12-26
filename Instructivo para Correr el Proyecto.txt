@@ -1,3 +1,6 @@
+# PruebaTecnica
+Prueba Técnica: Implementación de 3 Endpoints para Scraping y Procesamiento de Texto
+
 # Instructivo para Correr el Proyecto
 
 ## Descripción General
@@ -32,7 +35,7 @@ Este proyecto incluye el procesamiento de texto utilizando **Node.js**, **SQLite
 
 ### 1. Clonar el Repositorio
 Primero, clona el repositorio desde GitHub ejecutando el siguiente comando en tu terminal:
-git clone <URL-DEL-REPOSITORIO>
+git clone <https://github.com/RodrigoNarvaez77/PruebaTecnica>
 
 
 ### 2. Configurar las Variables de Entorno
@@ -41,7 +44,10 @@ APIHUGGINGFACE=tu_api_key_aqui
 
 ### 3. Instalar las Dependencias del Proyecto
 Navega a la carpeta del proyecto que acabas de clonar y ejecuta el siguiente comando para instalar las dependencias necesarias:
-npm install
+
+npm install express puppeteer sequelize sqlite3 validator @huggingface/inference dotenv
+npm install --save-dev nodemon
+
 
 ### 4. Iniciar el Servidor
 Este proyecto utiliza **Nodemon** para facilitar el desarrollo. Para iniciar el servidor, utiliza el siguiente comando:
@@ -71,7 +77,7 @@ Body (JSON):
 }
 
 {
-  "url": "https://www.bbc.co.uk/learningenglish
+  "url": "https://www.bbc.co.uk/learningenglish"
 }
 
 5.2-) Procesar Texto (POST /process)
@@ -121,7 +127,7 @@ Método: POST
   "task": "summarization"
 }
 
-###Consideraciones Finales
+### Consideraciones Finales
 
     Requerimientos de Red y Conectividad:
         Asegúrate de tener acceso a Internet, ya que el proyecto depende de la API de Hugging Face y del acceso a las URLs especificadas para realizar el scraping.
@@ -158,14 +164,11 @@ Método: POST
         Se recomienda usar Postman para probar los endpoints. Asegúrate de configurar los headers y el cuerpo correctamente según los ejemplos proporcionados.
 
 
+## Información del Postulante
+- **Nombre:** Rodrigo Alexis Narvaez Muñoz
+- **Correo Electrónico:** rodrigo.narvaez@alumnos.usm.cl
+- **GitHub:** https://github.com/RodrigoNarvaez77
+- **Telefono:** +56987490564
 
-
-
-
-
-
-
-
-
-
+        
 
