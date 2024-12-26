@@ -1,0 +1,171 @@
+# Instructivo para Correr el Proyecto
+
+## Descripción General
+Este proyecto incluye el procesamiento de texto utilizando **Node.js**, **SQLite** y la **API de Hugging Face**. Dentro del repositorio se encuentra el archivo de base de datos `database.sqlite`, y este instructivo detalla los pasos necesarios para ejecutar el proyecto correctamente.
+
+---
+
+## Requerimientos Técnicos
+
+1. **Node.js**: Versión 16.x o superior.
+   - Verifica tu versión de Node.js con el comando:
+     ```
+     node -v
+     ```
+   - Si no lo tienes instalado, descárgalo desde [Node.js](https://nodejs.org/).
+
+2. **NPM**: Incluido con Node.js.
+   - Verifica la versión instalada con:
+     ```
+     npm -v
+     ```
+
+3. **SQLite**: No es necesario instalar SQLite, ya que el archivo de base de datos `database.sqlite` está incluido en el repositorio.
+
+4. **API Key de Hugging Face**: 
+   - Obtén tu API Key desde [Hugging Face](https://huggingface.co/).
+   - Este proyecto requiere una API Key válida para realizar tareas de procesamiento de texto.
+
+---
+
+## Pasos para Correr el Proyecto
+
+### 1. Clonar el Repositorio
+Primero, clona el repositorio desde GitHub ejecutando el siguiente comando en tu terminal:
+git clone <URL-DEL-REPOSITORIO>
+
+
+### 2. Configurar las Variables de Entorno
+Crea un archivo `.env` en la raíz del proyecto y define tu API Key de Hugging Face de la siguiente manera:
+APIHUGGINGFACE=tu_api_key_aqui
+
+### 3. Instalar las Dependencias del Proyecto
+Navega a la carpeta del proyecto que acabas de clonar y ejecuta el siguiente comando para instalar las dependencias necesarias:
+npm install
+
+### 4. Iniciar el Servidor
+Este proyecto utiliza **Nodemon** para facilitar el desarrollo. Para iniciar el servidor, utiliza el siguiente comando:
+npm run dev
+
+Esto iniciará el servidor en modo desarrollo y reiniciará automáticamente cuando detecte cambios en el código.
+
+### 5. Probar las Funcionalidades
+Una vez iniciado el servidor, puedes probar las funcionalidades del proyecto enviando solicitudes POST a la URL:
+http://localhost:3000
+Usa herramientas como **Postman** o **cURL** para enviar peticiones con el siguiente formato:
+
+http://localhost:3000/api/scrape
+
+5.1-) Realizar Scraping en un Sitio Web (POST /scrape)
+
+Este endpoint realiza un scraping en un sitio web, obteniendo los titulares (h1, h2, h3) y descripciones (p) presentes en la página web especificada.
+Request (Ejemplo en Postman).
+
+
+URL: http://localhost:3000/api/scrape
+Método: POST
+Body (JSON):
+
+{
+  "url": "https://es.wikipedia.org/wiki/Wikipedia:Portada"
+}
+
+{
+  "url": "https://www.bbc.co.uk/learningenglish
+}
+
+5.2-) Procesar Texto (POST /process)
+
+Este endpoint utiliza la API de Hugging Face para realizar tareas de procesamiento de texto, como análisis de sentimiento y resumen.
+Funcionalidad
+
+Análisis de Sentimiento (sentiment-analysis):
+Identifica el sentimiento del texto proporcionado (positivo, negativo, neutro).
+
+URL: http://localhost:3000/api/process
+Método: POST
+
+{
+  "text": "Este es un texto de prueba que necesita análisis.",
+  "task": "sentiment-analysis"
+}
+    
+
+Resumen de Texto (summarization):
+Genera un resumen a partir del texto proporcionado.
+
+URL: http://localhost:3000/api/process
+Método: POST
+
+{
+  "text": "Citizen Kane (en España y la mayor parte de Hispanoamérica, Ciudadano Kane; en Argentina y en Uruguay, El ciudadano; en México, El ciudadano Kane) es una película dramática estadounidense de 1941, dirigida, producida y protagonizada por Orson Welles; escrita por este y Herman J. Mankiewicz. Es considerada como una de las obras maestras de toda la historia del cine, siendo particularmente alabada por su innovación en la música, la fotografía y la estructura narrativa. Fue estrenada por RKO Pictures.",
+  "task": "summarization"
+}
+
+5.3-)Endpoint Combinado (POST /combined)
+
+Este endpoint combina las funcionalidades de scraping y procesamiento de texto. Se encarga de:
+    Realizar scraping en una URL proporcionada, obteniendo titulares y descripciones.
+    Procesar los datos obtenidos (titulares) con una tarea específica, como análisis de sentimiento o resumen.
+
+URL: http://localhost:3000/combined
+Método: POST
+
+{
+  "url": "https://es.wikipedia.org/wiki/Wikipedia:Portada",
+  "task": "sentiment-analysis"
+}
+
+{
+  "url": "https://es.wikipedia.org/wiki/Wikipedia:Portada",
+  "task": "summarization"
+}
+
+###Consideraciones Finales
+
+    Requerimientos de Red y Conectividad:
+        Asegúrate de tener acceso a Internet, ya que el proyecto depende de la API de Hugging Face y del acceso a las URLs especificadas para realizar el scraping.
+
+    Límites y Restricciones de la API:
+        La API de Hugging Face puede tener límites de uso dependiendo del plan que utilices. Revisa la documentación oficial de Hugging Face para más detalles: Hugging Face API.
+
+    Seguridad del Archivo .env:
+        El archivo .env contiene tu clave API de Hugging Face. Asegúrate de no incluir este archivo en el repositorio público para evitar accesos no autorizados.
+
+    Datos Extraídos y Procesados:
+        Los datos obtenidos del scraping y procesados por la API no deben considerarse definitivos ni perfectos, ya que dependen de la estructura del sitio web y de la calidad del modelo utilizado.
+
+    Contenido Dinámico:
+        Este proyecto utiliza Puppeteer para el scraping, pero algunas páginas con contenido dinámico o cargado mediante JavaScript pueden requerir configuraciones adicionales para obtener los datos correctamente.
+
+    Uso Ético del Scraping:
+        Antes de realizar scraping en un sitio web, revisa sus términos de servicio para asegurarte de que tienes permiso para extraer contenido.
+
+    Gestión de Errores:
+        Si encuentras errores en el scraping o en el procesamiento de texto, verifica que:
+            La URL proporcionada sea válida y accesible.
+            La API Key de Hugging Face esté correctamente configurada.
+            El servidor esté ejecutándose sin problemas.
+
+    Versiones y Compatibilidad:
+        Asegúrate de utilizar la versión recomendada de Node.js (16.x o superior).
+        Si utilizas otras versiones, podrían surgir problemas de compatibilidad con las dependencias del proyecto.
+
+    Base de Datos SQLite:
+        El archivo database.sqlite incluido en el proyecto almacena los datos procesados y scrapeados. Si necesitas restablecer la base de datos, puedes eliminar el archivo y reiniciar el servidor para generar uno nuevo.
+
+    Uso de Postman:
+        Se recomienda usar Postman para probar los endpoints. Asegúrate de configurar los headers y el cuerpo correctamente según los ejemplos proporcionados.
+
+
+
+
+
+
+
+
+
+
+
+
+
