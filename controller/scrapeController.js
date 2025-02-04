@@ -7,7 +7,9 @@ const scrapeWebsite = async (req, res) => {
 
   // Validación de URL
   if (!url || !validator.isURL(url)) {
-    return res.status(400).json({ error: "Por favor, proporciona una URL válida." });
+    return res
+      .status(400)
+      .json({ error: "Por favor, proporciona una URL válida." });
   }
 
   try {
@@ -18,13 +20,19 @@ const scrapeWebsite = async (req, res) => {
 
     // Extraer los datos
     const data = await page.evaluate(() => {
-      const headlines = Array.from(document.querySelectorAll("h1, h2, h3")).map(el => el.innerText.trim());
-      const descriptions = Array.from(document.querySelectorAll("p")).map(el => el.innerText.trim());
+      const headlines = Array.from(document.querySelectorAll("h1, h2, h3")).map(
+        (el) => el.innerText.trim()
+      );
+      const descriptions = Array.from(document.querySelectorAll("p")).map(
+        (el) => el.innerText.trim()
+      );
 
-      return headlines.map((headline, index) => ({
-        headline,
-        description: descriptions[index] || "Descripción no disponible",
-      })).filter(item => item.headline);
+      return headlines
+        .map((headline, index) => ({
+          headline,
+          description: descriptions[index] || "Descripción no disponible",
+        }))
+        .filter((item) => item.headline);
     });
 
     await browser.close();
@@ -49,7 +57,12 @@ const scrapeWebsite = async (req, res) => {
     });
   } catch (error) {
     console.error("Error en el scraping:", error.message);
-    res.status(500).json({ error: "No se pudo realizar el scraping.", details: error.message });
+    res
+      .status(500)
+      .json({
+        error: "No se pudo realizar el scraping.",
+        details: error.message,
+      });
   }
 };
 
